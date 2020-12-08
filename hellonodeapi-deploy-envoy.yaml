@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+#api-envoyVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: api-envoy
+  labels:
+    app: api-envoy
+spec:
+  selector:
+    matchLabels:
+      app: api-envoy
+  template:
+    metadata:
+      labels:
+        app: api-envoy
+    spec:
+      containers:
+      - name: api-envoy
+        #image: vchaudh3/front:api
+        #image: vchaudh3/api:3000
+        image: vchaudh3/api:3000.log
+        imagePullPolicy: Always
+        env:
+        - name: "ENVOY_LB_ALG"
+          value: "LEAST_REQUEST"
+        - name: "SERVICE_NAME"
+          value: "api"
+          #value: "headless-service"
+        ports:
+        - name: http
+          containerPort: 8080
+          #containerPort: 80
+          #containerPort: 3000
+        - name: envoy-admin
+          containerPort: 9901

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-envoy
+  labels:
+    app: api-envoy
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: api-envoy
